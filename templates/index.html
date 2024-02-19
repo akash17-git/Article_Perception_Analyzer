@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Readability Analysis</title>
+    <!-- Include jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-image: url('https://s3.resume.io/cdn-cgi/image/width=544,height=476,dpr=1.35,fit=cover,quality=70,format=auto/uploads/blog_post/featured_image/27951/Free_resume_checker-_grade___score_your_expected_performance__1_.png');
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        #container {
+            background-color: rgba(255, 255, 255, 0.8); /* Adjust opacity as needed */
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        h1 {
+            cursor: pointer; /* Cursor changes to pointer when hovered */
+            user-select: none; /* Prevent text selection */
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <h1>Readability Analysis</h1>
+        <form id="urlForm">
+            <label for="url">Enter URL:</label><br>
+            <input type="text" id="url" name="url" required><br><br>
+            <button type="submit">Analyze</button>
+        </form>
+        <table id="resultTable"></table>
+    </div>
+
+    <script>
+        // Redirect to home page when clicking "Readability Analysis"
+        document.querySelector('h1').addEventListener('click', function() {
+            window.location.href = '/'; // Redirect to home page
+        });
+
+        document.getElementById('urlForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            var url = document.getElementById('url').value;
+
+            fetch('/analyze_readability', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: 'url=' + encodeURIComponent(url)
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                displayResults(data);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        });
+
+        function displayResults(data) {
+            var orderedKeys = [
+                "Type",
+                "Title",
+                "Average Word Length",
+                "Average number of Words Per Sentence",
+                "Fog Index",
+                "Negative Score",
+                "Percentage of Complex Words",
+                "Personal Pronoun Count",
+                "Polarity Score",
+                "Positive Score",
+                "Subjectivity Score"
+            ];
+
+            var table = document.getElementById('resultTable');
+            table.innerHTML = ''; // Clear previous results
+
+            // Create table rows for each result in the ordered sequence
+            orderedKeys.forEach(function(key) {
+                if (data.hasOwnProperty(key)) {
+                    var row = table.insertRow();
+                    var cell1 = row.insertCell(0);
+                    var cell2 = row.insertCell(1);
+                    cell1.innerHTML = key;
+                    cell2.innerHTML = data[key];
+                }
+            });
+        }
+    </script>
+</body>
+</html>
