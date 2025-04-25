@@ -1,0 +1,13 @@
+transformers
+torch
+nltk
+textstat
+scikit-learn
+requests
+beautifulsoup4
+bs4
+tf-keras
+rich
+flask
+textstat
+tensorflow
