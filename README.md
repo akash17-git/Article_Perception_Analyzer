@@ -1,4 +1,4 @@
-# Article Analysis Project
+# Article Perception Analyzer
 
 This project is designed to analyze articles based on their sentiment, emotion, topic, complexity, and other important factors. Users can either input the text directly or provide a URL to fetch the article's content. The system performs a series of analyses on the article, including sentiment analysis, emotion detection, topic classification, text summarization, and keyword extraction.
 
@@ -30,11 +30,3 @@ This project is designed to analyze articles based on their sentiment, emotion, 
 ### Requirements
 
 To run this project, you need to install the required dependencies. Please use the `requirements.txt` file provided.
-
-### Installation
-
-1. Clone the repository:
-
-   ```bash
-   git clone https://github.com/yourusername/article-analysis.git
-   cd article-analysis
